@@ -1,0 +1,10 @@
+// Replace {Entity} throughout. Add entity-specific query methods to the interface + impl as needed.
+public interface I{Entity}Repository : IRepository<{Entity}>
+{
+    // e.g. Task<List<{Entity}>> GetByCategoryAsync(int categoryId);
+}
+
+public class {Entity}Repository : Repository<{Entity}>, I{Entity}Repository
+{
+    public {Entity}Repository(AppDbContext context) : base(context) { }
+}

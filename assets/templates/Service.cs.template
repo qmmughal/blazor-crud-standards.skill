@@ -1,0 +1,41 @@
+// Replace {Entity} throughout. Add business rules beyond DataAnnotations in Create/Update.
+public interface I{Entity}Service
+{
+    Task<List<{Entity}>> GetAllAsync();
+    Task<{Entity}?> GetByIdAsync(int id);
+    Task CreateAsync({Entity} entity);
+    Task UpdateAsync({Entity} entity);
+    Task DeleteAsync(int id);
+}
+
+public class {Entity}Service : I{Entity}Service
+{
+    private readonly I{Entity}Repository _repository;
+
+    public {Entity}Service(I{Entity}Repository repository) => _repository = repository;
+
+    public Task<List<{Entity}>> GetAllAsync() => _repository.GetAllAsync();
+    public Task<{Entity}?> GetByIdAsync(int id) => _repository.GetByIdAsync(id);
+
+    public async Task CreateAsync({Entity} entity)
+    {
+        await _repository.AddAsync(entity);
+        await _repository.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync({Entity} entity)
+    {
+        _repository.Update(entity);
+        await _repository.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var existing = await _repository.GetByIdAsync(id);
+        if (existing is not null)
+        {
+            _repository.Delete(existing);
+            await _repository.SaveChangesAsync();
+        }
+    }
+}

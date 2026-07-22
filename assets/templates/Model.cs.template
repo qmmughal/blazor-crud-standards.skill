@@ -1,0 +1,14 @@
+// Replace {Entity} with the entity name (e.g. Product) and adjust fields.
+using System.ComponentModel.DataAnnotations;
+
+public class {Entity}
+{
+    public int Id { get; set; }
+
+    [Required, StringLength(200)]
+    public string Name { get; set; } = string.Empty;
+
+    // Add remaining fields with appropriate DataAnnotations, e.g.:
+    // [Range(0, double.MaxValue)]
+    // public decimal Price { get; set; }
+}

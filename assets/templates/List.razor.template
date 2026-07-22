@@ -1,0 +1,58 @@
+@* Replace {Entity}/{entity-route} throughout.
+   Save as Components/Pages/{Entity}List.razor (unified Blazor Web App template)
+   or Pages/{Entity}List.razor (legacy Blazor Server).
+   Remove the @rendermode line if the project is legacy Blazor Server (interactivity is implicit there)
+   or if this page intentionally stays static SSR. *@
+@page "/{entity-route}"
+@rendermode InteractiveServer
+@inject I{Entity}Service {Entity}Service
+
+<h3>{Entity}s</h3>
+<a class="btn btn-primary mb-3" href="/{entity-route}/create">+ New {Entity}</a>
+
+@if (_loading)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!_items.Any())
+{
+    <p>No {entity-route} yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr><th>Name</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" href="@($"/{entity-route}/edit/{item.Id}")">Edit</a>
+                        <button class="btn btn-sm btn-danger" @onclick="() => Delete(item.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<{Entity}> _items = new();
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _items = await {Entity}Service.GetAllAsync();
+        _loading = false;
+    }
+
+    private async Task Delete(int id)
+    {
+        // TODO: replace with a real confirmation modal before shipping
+        await {Entity}Service.DeleteAsync(id);
+        _items = await {Entity}Service.GetAllAsync();
+    }
+}

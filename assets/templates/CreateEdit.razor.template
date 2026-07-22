@@ -1,0 +1,49 @@
+@* {Entity}Create.razor — save under Components/Pages/ (unified template) or Pages/ (legacy).
+   Remove @rendermode if legacy Blazor Server or if intentionally static SSR. *@
+@page "/{entity-route}/create"
+@rendermode InteractiveServer
+@inject I{Entity}Service {Entity}Service
+@inject NavigationManager Nav
+
+<h3>New {Entity}</h3>
+<{Entity}Form Model="_model" OnValidSubmit="Save" />
+
+@code {
+    private {Entity} _model = new();
+
+    private async Task Save({Entity} entity)
+    {
+        await {Entity}Service.CreateAsync(entity);
+        Nav.NavigateTo("/{entity-route}");
+    }
+}
+
+@* ---------------------------------------------------------- *@
+
+@* {Entity}Edit.razor *@
+@page "/{entity-route}/edit/{Id:int}"
+@rendermode InteractiveServer
+@inject I{Entity}Service {Entity}Service
+@inject NavigationManager Nav
+
+<h3>Edit {Entity}</h3>
+@if (_model is not null)
+{
+    <{Entity}Form Model="_model" OnValidSubmit="Save" />
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private {Entity}? _model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _model = await {Entity}Service.GetByIdAsync(Id);
+    }
+
+    private async Task Save({Entity} entity)
+    {
+        await {Entity}Service.UpdateAsync(entity);
+        Nav.NavigateTo("/{entity-route}");
+    }
+}
