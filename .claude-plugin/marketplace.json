@@ -1,0 +1,14 @@
+{
+  "name": "qmmughal-blazor",
+  "owner": {
+    "name": "qmmughal",
+    "url": "https://github.com/qmmughal"
+  },
+  "plugins": [
+    {
+      "name": "blazor-crud-standards",
+      "source": "./",
+      "description": "Scaffold and review Blazor CRUD pages, services, and repositories using standard patterns."
+    }
+  ]
+}
