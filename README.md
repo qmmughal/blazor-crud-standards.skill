@@ -24,8 +24,7 @@ Before doing either, the skill inspects the project to detect which Blazor templ
 ```
 .claude-plugin/
 ├── plugin.json                           # Plugin manifest (name, version, author, license)
-├── marketplace.json                      # Lets Claude Code add this repo as a plugin marketplace
-└── icon.png                              # Directory listing icon
+└── marketplace.json                      # Lets Claude Code add this repo as a plugin marketplace
 skills/blazor-crud-standards/
 ├── SKILL.md                              # Skill definition (frontmatter + instructions)
 ├── references/
@@ -104,8 +103,8 @@ Claude will detect your project's Blazor template generation and hosting model f
 ## What this plugin runs and sends
 
 Nothing. The plugin is instructions, reference Markdown, and C#/Razor template files only. It has no
-hooks, no MCP servers, and no scripts; it makes no network requests, reads no credentials, and
-collects no data. Templates are copied into your project only when you ask Claude to scaffold code.
+hooks, no MCP servers, and no scripts; it makes no network requests and collects
+no data. Templates are copied into your project only when you ask Claude to scaffold code.
 
 ## Trademarks
 
