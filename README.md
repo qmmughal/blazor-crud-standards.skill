@@ -1,6 +1,6 @@
-# Blazor CRUD Standards — Claude Code Skill
+# Blazor CRUD Standards — Claude Plugin
 
-A [Claude Code](https://claude.com/claude-code) skill that scaffolds and reviews CRUD interfaces for **any Blazor app** — the unified Blazor Web App template (.NET 8+, static SSR plus `InteractiveServer`/`InteractiveWebAssembly`/`InteractiveAuto` render modes), legacy Blazor Server, Blazor WebAssembly, or Blazor Hybrid (MAUI) — following Microsoft's official architectural and component patterns.
+A Claude plugin (one Agent Skill) that scaffolds and reviews CRUD interfaces for **any Blazor app** — the unified Blazor Web App template (.NET 8+, static SSR plus `InteractiveServer`/`InteractiveWebAssembly`/`InteractiveAuto` render modes), legacy Blazor Server, Blazor WebAssembly, or Blazor Hybrid (MAUI) — following Microsoft's official architectural and component patterns.
 
 Framework-agnostic: no assumption of ABP Framework, Telerik, MudBlazor, or any other add-on library. Default styling is plain Bootstrap (the official Blazor project template default).
 
@@ -22,20 +22,23 @@ Before doing either, the skill inspects the project to detect which Blazor templ
 ## Repository contents
 
 ```
-blazor-crud-standards/
+.claude-plugin/
+├── plugin.json                           # Plugin manifest (name, version, author, license)
+├── marketplace.json                      # Lets Claude Code add this repo as a plugin marketplace
+└── icon.png                              # Directory listing icon
+skills/blazor-crud-standards/
 ├── SKILL.md                              # Skill definition (frontmatter + instructions)
 ├── references/
 │   ├── architecture.md                   # Layering rules, generic repository pattern, DI, WASM notes
 │   ├── component-patterns.md             # Full Razor/C# code templates for each convention
 │   └── checklist.md                      # Review-mode checklist
-├── assets/templates/                     # Copy-and-adapt starter files
-│   ├── Model.cs.template
-│   ├── Repository.cs.template
-│   ├── Service.cs.template
-│   ├── List.razor.template
-│   ├── Form.razor.template
-│   └── CreateEdit.razor.template
-└── blazor-crud-standards.skill           # Packaged skill (zip) for direct install
+└── assets/templates/                     # Copy-and-adapt starter files
+    ├── Model.cs.template
+    ├── Repository.cs.template
+    ├── Service.cs.template
+    ├── List.razor.template
+    ├── Form.razor.template
+    └── CreateEdit.razor.template
 ```
 
 ## Architecture enforced by this skill
@@ -62,21 +65,28 @@ Razor components                 — inject the service, never the repository di
 
 ## Installation
 
-Claude Code skills live under a `.claude/skills/` directory, either at the project level or your user-level `~/.claude/skills/`.
+### Claude Code (plugin)
 
-**Option 1 — clone the unpacked skill:**
+```bash
+claude plugin marketplace add qmmughal/blazor-crud-standards.skill
+claude plugin install blazor-crud-standards@qmmughal-blazor
+```
+
+Or from inside Claude Code: `/plugin marketplace add qmmughal/blazor-crud-standards.skill`, then
+`/plugin install blazor-crud-standards@qmmughal-blazor`.
+
+### Manual skill install
+
+Copy just the skill folder into a skills directory — `~/.claude/skills/` for all projects, or
+`<your-project>/.claude/skills/` for one project:
 
 ```bash
 git clone https://github.com/qmmughal/blazor-crud-standards.skill.git
-cp -r blazor-crud-standards.skill/blazor-crud-standards ~/.claude/skills/blazor-crud-standards
-# or into a project: cp -r blazor-crud-standards.skill/blazor-crud-standards <your-project>/.claude/skills/
+cp -r blazor-crud-standards.skill/skills/blazor-crud-standards ~/.claude/skills/
 ```
 
-Keep the folder name `blazor-crud-standards` and the `SKILL.md` filename as-is — Claude Code discovers skills by scanning for `SKILL.md` files under `.claude/skills/*/`.
-
-**Option 2 — use the packaged `.skill` file:**
-
-Download [`blazor-crud-standards.skill`](./blazor-crud-standards.skill) and install/import it through whatever mechanism your Claude Code setup uses for packaged skills.
+Keep the folder name `blazor-crud-standards` and the `SKILL.md` filename as-is — Claude discovers
+skills by scanning for `SKILL.md` files under `skills/*/`.
 
 ## Usage
 
@@ -90,6 +100,17 @@ Once installed, just ask Claude Code naturally — no special invocation syntax 
 ```
 
 Claude will detect your project's Blazor template generation and hosting model first (unified Blazor Web App, legacy Blazor Server, Blazor WebAssembly, or Blazor Hybrid) and ask before assuming, if the signals are ambiguous or the project is brand new.
+
+## What this plugin runs and sends
+
+Nothing. The plugin is instructions, reference Markdown, and C#/Razor template files only. It has no
+hooks, no MCP servers, and no scripts; it makes no network requests, reads no credentials, and
+collects no data. Templates are copied into your project only when you ask Claude to scaffold code.
+
+## Trademarks
+
+This is an independent community project, not affiliated with or endorsed by Microsoft or Anthropic.
+Blazor, .NET, and Entity Framework Core are named only to describe what the skill works with.
 
 ## License
 

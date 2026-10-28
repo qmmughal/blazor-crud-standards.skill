@@ -1,0 +1,14 @@
+{
+  "name": "blazor-crud-standards",
+  "displayName": "Blazor CRUD Standards (community)",
+  "version": "1.0.0",
+  "description": "Community skill that scaffolds and reviews CRUD interfaces for any Blazor app (Blazor Web App, Blazor Server, WebAssembly, or Hybrid) using standard patterns: EF Core with a repository layer, EditForm plus DataAnnotations validation, correct render modes, lifecycle, and DI, with plain Bootstrap styling.",
+  "author": {
+    "name": "qmmughal",
+    "url": "https://github.com/qmmughal"
+  },
+  "homepage": "https://github.com/qmmughal/blazor-crud-standards.skill",
+  "repository": "https://github.com/qmmughal/blazor-crud-standards.skill",
+  "license": "MIT",
+  "keywords": ["blazor", "crud", "efcore", "razor", "dotnet", "scaffolding", "code-review"]
+}
